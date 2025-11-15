@@ -16,6 +16,7 @@ namespace Inovatec
         public Form1()
         {
             InitializeComponent();
+
         }
 
         private void arbolToolStripMenuItem_Click(object sender, EventArgs e)
@@ -28,6 +29,11 @@ namespace Inovatec
         {
             FrmGrafo ventana = new FrmGrafo();
             ventana.Show();
+
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
 
         }
     }

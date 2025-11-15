@@ -29,6 +29,8 @@ namespace Inovatec.Vista
 
             // Sincronizar selección del TreeView con cbPadre
             tvArbol.AfterSelect += TvArbol_AfterSelect;
+
+            btnBuscar.Click += btnBuscar_Click;
         }
 
         private void TvArbol_AfterSelect(object sender, TreeViewEventArgs e)
@@ -111,7 +113,7 @@ namespace Inovatec.Vista
 
         private void FrmArbol_Load(object sender, EventArgs e)
         {
-
+            
         }
 
         private void btnAgregar_Click(object sender, EventArgs e)
@@ -172,7 +174,7 @@ namespace Inovatec.Vista
             }
 
             // Confirmación para evitar borrados accidentales
-            var conf = MessageBox.Show($"¿Seguro que deseas eliminar '{nombre}'? (Si es padre se eliminarán sus subordinados)", "Confirmar eliminación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            var conf = MessageBox.Show($"¿Seguro que deseas eliminar '{nombre}'? ", "Confirmar eliminación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (conf != DialogResult.Yes) return;
 
             // Eliminar de la estructura
@@ -192,6 +194,74 @@ namespace Inovatec.Vista
             ActualizarComboPadre();
 
             MessageBox.Show("Cargo eliminado correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void groupBox1_Enter(object sender, EventArgs e)
+        {
+
+        }
+        private int ObtenerNivel(Inovatec.Modelos.NodoJerarquico nodo)
+        {
+            int nivel = 0;
+            var actual = nodo;
+            while (actual != null && actual.Padre != null)
+            {
+                nivel++;
+                actual = actual.Padre;
+            }
+            return nivel;
+        }
+
+        private string ObtenerRuta(Inovatec.Modelos.NodoJerarquico nodo)
+        {
+            var partes = new List<string>();
+            var actual = nodo;
+            while (actual != null)
+            {
+                partes.Add(actual.Nombre);
+                actual = actual.Padre;
+            }
+            partes.Reverse();
+            return string.Join(" > ", partes);
+        }
+
+        private void btnBuscar_Click(object sender, EventArgs e)
+        {
+            string textoBuscar = tbBuscar.Text?.Trim();
+            if (string.IsNullOrWhiteSpace(textoBuscar))
+            {
+                MessageBox.Show("Introduce el nombre del cargo a buscar.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            var nodo = arbol.Buscar(arbol.Raiz, textoBuscar);
+            if (nodo == null)
+            {
+                MessageBox.Show($"No se encontró el cargo '{textoBuscar}'.", "No encontrado", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            int hijosCount = nodo.Hijos?.Count ?? 0;
+            string jefe = nodo.Padre != null ? nodo.Padre.Nombre : "(Sin jefe)";
+            int nivel = ObtenerNivel(nodo);
+            string ruta = ObtenerRuta(nodo);
+
+            string mensaje =
+                $"Cargo: {nodo.Nombre}\n" +
+                $"Jefe directo: {jefe}\n" +
+                $"Hijos (cantidad): {hijosCount}\n" +
+                $"Nivel jerárquico: {nivel}\n" +
+                $"Ruta en el árbol: {ruta}";
+
+            // seleccionar en TreeView si existe
+            var nodoTV = BuscarTreeNode(tvArbol.Nodes, nodo.Nombre);
+            if (nodoTV != null)
+            {
+                tvArbol.SelectedNode = nodoTV;
+                nodoTV.EnsureVisible();
+            }
+
+            MessageBox.Show(mensaje, "Resultado de búsqueda", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
         }
     }
     
