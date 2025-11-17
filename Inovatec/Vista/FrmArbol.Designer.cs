@@ -206,9 +206,9 @@
             this.groupBox4.Controls.Add(this.lblCargos);
             this.groupBox4.Controls.Add(this.btnNiveles);
             this.groupBox4.Controls.Add(this.label6);
-            this.groupBox4.Location = new System.Drawing.Point(462, 524);
+            this.groupBox4.Location = new System.Drawing.Point(462, 508);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(405, 82);
+            this.groupBox4.Size = new System.Drawing.Size(405, 145);
             this.groupBox4.TabIndex = 5;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "NIveles";
@@ -333,7 +333,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1045, 774);
+            this.ClientSize = new System.Drawing.Size(1025, 774);
             this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox3);

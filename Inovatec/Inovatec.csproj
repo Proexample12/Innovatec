@@ -53,6 +53,7 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="Modelos\ArbolJerarquico.cs" />
+    <Compile Include="Modelos\Grafo.cs" />
     <Compile Include="Modelos\NodoJerarquico.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -82,6 +83,9 @@
     </Compile>
     <EmbeddedResource Include="Vista\FrmArbol.resx">
       <DependentUpon>FrmArbol.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Vista\FrmGrafo.resx">
+      <DependentUpon>FrmGrafo.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
